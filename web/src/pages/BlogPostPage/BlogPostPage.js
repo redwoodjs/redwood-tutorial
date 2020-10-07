@@ -4,7 +4,9 @@ import BlogPostCell from 'src/components/BlogPostCell'
 const BlogPostPage = ({ id }) => {
   return (
     <BlogLayout>
-      <BlogPostCell id={id} />
+      <div className="-mt-12">
+        <BlogPostCell id={id} />
+      </div>
     </BlogLayout>
   )
 }
