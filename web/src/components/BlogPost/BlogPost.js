@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 
 const BlogPost = ({ post }) => {
   return (
-    <article className="mt-10">
+    <article>
       <header>
         <h2 className="text-xl text-blue-700 font-semibold">
           <Link to={routes.blogPost({ id: post.id })}>{post.title}</Link>

@@ -20,9 +20,11 @@ export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ posts }) => {
   return (
-    <div className="-mt-12">
+    <div className="-mt-10">
       {posts.map((post) => (
-        <BlogPost key={post.id} post={post} />
+        <div key={post.id} className="mt-10">
+          <BlogPost post={post} />
+        </div>
       ))}
     </div>
   )
