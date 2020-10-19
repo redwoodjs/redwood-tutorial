@@ -20,7 +20,10 @@ describe('BlogPostCell', () => {
   })
 
   test('Success renders successfully', async () => {
-    render(<Success blogPost={standard().blogPost} />)
-    expect(screen.getByText(/42/i)).toBeInTheDocument()
+    const post = standard().post
+    render(<Success post={post} />)
+
+    expect(screen.getByText(post.title)).toBeInTheDocument()
+    expect(screen.getByText(post.body)).toBeInTheDocument()
   })
 })
