@@ -16,6 +16,9 @@ const UPDATE_POST_MUTATION = gql`
   mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
     updatePost(id: $id, input: $input) {
       id
+      title
+      body
+      createdAt
     }
   }
 `
