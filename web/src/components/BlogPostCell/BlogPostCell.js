@@ -18,5 +18,9 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ post }) => {
-  return <BlogPost post={post} />
+  return (
+    <div className="-mt-10">
+      <BlogPost post={post} />
+    </div>
+  )
 }
