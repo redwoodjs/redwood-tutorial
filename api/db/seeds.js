@@ -23,20 +23,17 @@ const POSTS = [
   },
 ]
 
-const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
-  }
-}
-
 async function main() {
   const existing = await db.post.findMany()
 
-  asyncForEach(POSTS, async (post) => {
+  for (let i = 0; i < POSTS.length; i++) {
+    const post = POSTS[i]
+
+    // only inserts a post if one with the exact same title doesn't already exist
     if (!existing.find((ex) => ex.title === post.title)) {
       await db.post.create({ data: post })
     }
-  })
+  }
 }
 
 main()
