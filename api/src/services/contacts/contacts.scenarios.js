@@ -1,4 +1,4 @@
-export const standard = {
+export const standard = defineScenario({
   contact: {
     john: {
       name: 'John Doe',
@@ -6,4 +6,4 @@ export const standard = {
       message: 'I love RedwoodJS',
     },
   },
-}
+})
