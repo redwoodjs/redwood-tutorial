@@ -13,7 +13,7 @@ The [tutorial itself](https://redwoodjs.com/tutorial2/prerequisites) contains in
 git clone https://github.com/redwoodjs/redwood-tutorial
 cd redwood-tutorial
 yarn install
-yarn rw db up
-yarn rw db seed
+yarn rw prisma migrate dev
+yarn rw prisma db seed
 yarn rw dev
 ```
