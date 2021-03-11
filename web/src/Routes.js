@@ -22,7 +22,7 @@ const Routes = () => {
         <Route path="/admin/posts/{id:Int}" page={PostPage} name="post" />
         <Route path="/admin/posts" page={PostsPage} name="posts" />
       </Private>
-      <Route notfound page={NotFoundPage} prerender />
+      <Route notfound page={NotFoundPage} />
     </Router>
   )
 }
