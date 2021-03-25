@@ -9,7 +9,6 @@ import {
 } from '@redwoodjs/forms'
 import { Flash, useFlash, useMutation } from '@redwoodjs/web'
 import { useForm } from 'react-hook-form'
-import BlogLayout from 'src/layouts/BlogLayout'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
@@ -38,7 +37,7 @@ const ContactPage = () => {
   }
 
   return (
-    <BlogLayout>
+    <>
       <Flash timeout={1000} className="bg-green-100 text-green-700" />
       <Form
         onSubmit={onSubmit}
@@ -106,7 +105,7 @@ const ContactPage = () => {
           Save
         </Submit>
       </Form>
-    </BlogLayout>
+    </>
   )
 }
 
