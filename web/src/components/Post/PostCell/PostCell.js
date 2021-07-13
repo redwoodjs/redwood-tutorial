@@ -1,7 +1,7 @@
-import Post from 'src/components/Post'
+import Post from 'src/components/Post/Post'
 
 export const QUERY = gql`
-  query FIND_POST_BY_ID($id: Int!) {
+  query FindPostById($id: Int!) {
     post: post(id: $id) {
       id
       title

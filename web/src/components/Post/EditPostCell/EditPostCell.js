@@ -1,9 +1,10 @@
-import { useMutation, useFlash } from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 import { navigate, routes } from '@redwoodjs/router'
-import PostForm from 'src/components/PostForm'
+import PostForm from 'src/components/Post/PostForm'
 
 export const QUERY = gql`
-  query FIND_POST_BY_ID($id: Int!) {
+  query FindPostById($id: Int!) {
     post: post(id: $id) {
       id
       title
@@ -26,11 +27,10 @@ const UPDATE_POST_MUTATION = gql`
 export const Loading = () => <div>Loading...</div>
 
 export const Success = ({ post }) => {
-  const { addMessage } = useFlash()
   const [updatePost, { loading, error }] = useMutation(UPDATE_POST_MUTATION, {
     onCompleted: () => {
+      toast.success('Post updated')
       navigate(routes.posts())
-      addMessage('Post updated.', { classes: 'rw-flash-success' })
     },
   })
 
