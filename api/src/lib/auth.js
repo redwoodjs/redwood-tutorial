@@ -1,104 +1,78 @@
-// Define what you want `currentUser` to return throughout your app. For example,
-// to return a real user from your database, you could do something like:
-//
-//   export const getCurrentUser = async ({ email }) => {
-//     return await db.user.fineUnique({ where: { email } })
-//   }
-//
-// If you want to enforce role-based access ...
-//
-// You'll need to set the currentUser's roles attributes to the
-// collection of roles as defined by your app.
-//
-// This allows requireAuth() on the api side and hasRole() in the useAuth() hook on the web side
-// to check if the user is assigned a given role or not.
-//
-// How you set the currentUser's roles depends on your auth provider and its implementation.
-//
-// For example, your decoded JWT may store `roles` in it namespaced `app_metadata`:
-//
-// {
-//   'https://example.com/app_metadata': { authorization: { roles: ['admin'] } },
-//   'https://example.com/user_metadata': {},
-//   iss: 'https://app.us.auth0.com/',
-//   sub: 'email|1234',
-//   aud: [
-//     'https://example.com',
-//     'https://app.us.auth0.com/userinfo'
-//   ],
-//   iat: 1596481520,
-//   exp: 1596567920,
-//   azp: '1l0w6JXXXXL880T',
-//   scope: 'openid profile email'
-// }
-//
-// The parseJWT utility will extract the roles from decoded token.
-//
-// The app_medata claim may or may not be namespaced based on the auth provider.
-// Note: Auth0 requires namespacing custom JWT claims
-//
-// Some providers, such as with Auth0, will set roles an authorization
-// attribute in app_metadata (namespaced or not):
-//
-// 'app_metadata': { authorization: { roles: ['publisher'] } }
-// 'https://example.com/app_metadata': { authorization: { roles: ['publisher'] } }
-//
-// Other providers may include roles simply within app_metadata:
-//
-// 'app_metadata': { roles: ['author'] }
-// 'https://example.com/app_metadata': { roles: ['author'] }
-//
-// And yet other may define roles as a custom claim at the root of the decoded token:
-//
-// roles: ['admin']
-//
-// The function `getCurrentUser` should return the user information
-// together with a collection of roles to check for role assignment:
+import {
+  AuthenticationError,
+  ForbiddenError,
+  parseJWT,
+} from '@redwoodjs/graphql-server'
+import { logger } from 'src/lib/logger'
+/**
+ * getCurrentUser returns the user information together with
+ * an optional collection of roles used by requireAuth() to check
+ * if the user is authenticated or has role-based access
+ *
+ * @param decoded - The decoded access token containing user info and JWT claims like `sub`
+ * @param { token, SupportedAuthTypes type } - The access token itself as well as the auth provider type
+ * @param { APIGatewayEvent event, Context context } - An object which contains information from the invoker
+ * such as headers and cookies, and the context information about the invocation such as IP Address
+ *
+ * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
+ */
+export const getCurrentUser = async (
+  decoded,
+  { _token, _type },
+  { _event, _context }
+) => {
+  if (!decoded) {
+    logger.warn('Missing decoded user')
+    return null
+  }
 
-import { AuthenticationError, ForbiddenError, parseJWT } from '@redwoodjs/api'
+  const { roles } = parseJWT({ decoded })
+
+  if (roles) {
+    return { ...decoded, roles }
+  }
+
+  return { ...decoded }
+}
 
 /**
- * Use requireAuth in your services to check that a user is logged in,
- * whether or not they are assigned a role, and optionally raise an
- * error if they're not.
+ * The user is authenticated if there is a currentUser in the context
  *
- * @param {string=, string[]=} role - An optional role
- *
- * @example - No role-based access control.
- *
- * export const getCurrentUser = async (decoded) => {
- *   return await db.user.fineUnique({ where: { decoded.email } })
- * }
- *
- * @example - User info is conatined in the decoded token and roles extracted
- *
- * export const getCurrentUser = async (decoded, { _token, _type }) => {
- *   return { ...decoded, roles: parseJWT({ decoded }).roles }
- * }
- *
- * @example - User record query by email with namespaced app_metadata roles
- *
- * export const getCurrentUser = async (decoded) => {
- *   const currentUser = await db.user.fineUnique({ where: { email: decoded.email } })
- *
- *   return {
- *     ...currentUser,
- *     roles: parseJWT({ decoded: decoded, namespace: NAMESPACE }).roles,
- *   }
- * }
- *
- * @example - User record query by an identity with app_metadata roles
- *
- * const getCurrentUser = async (decoded) => {
- *   const currentUser = await db.user.fineUnique({ where: { userIdentity: decoded.sub } })
- *   return {
- *     ...currentUser,
- *     roles: parseJWT({ decoded: decoded }).roles,
- *   }
- * }
+ * @returns {boolean} - If the currentUser is authenticated
  */
-export const getCurrentUser = async (decoded, { _token, _type }) => {
-  return { ...decoded, roles: parseJWT({ decoded }).roles }
+export const isAuthenticated = () => {
+  return !!context.currentUser
+}
+
+/**
+ * Checks if the currentUser is authenticated (and assigned one of the given roles)
+ *
+ * @param {string= | string[]=} roles - A single role or list of roles to check if the user belongs to
+ *
+ * @returns {boolean} - Returns true if the currentUser is authenticated (and assigned one of the given roles)
+ */
+export const hasRole = ({ roles }) => {
+  if (!isAuthenticated()) {
+    return false
+  }
+
+  if (
+    typeof roles !== 'undefined' &&
+    typeof roles === 'string' &&
+    context.currentUser.roles?.includes(roles)
+  ) {
+    return true
+  }
+
+  if (
+    typeof roles !== 'undefined' &&
+    Array.isArray(roles) &&
+    context.currentUser.roles?.some((r) => roles.includes(r))
+  ) {
+    return true
+  }
+
+  return false
 }
 
 /**
@@ -106,39 +80,21 @@ export const getCurrentUser = async (decoded, { _token, _type }) => {
  * whether or not they are assigned a role, and optionally raise an
  * error if they're not.
  *
- * @param {string=} roles - An optional role or list of roles
- * @param {string[]=} roles - An optional list of roles
-
- * @example
+ * @param {string= | string[]=} roles - A single role or list of roles to check if the user belongs to
  *
- * // checks if currentUser is authenticated
- * requireAuth()
+ * @returns - If the currentUser is authenticated (and assigned one of the given roles)
  *
- * @example
+ * @throws {AuthenticationError} - If the currentUser is not authenticated
+ * @throws {ForbiddenError} If the currentUser is not allowed due to role permissions
  *
- * // checks if currentUser is authenticated and assigned one of the given roles
- * requireAuth({ role: 'admin' })
- * requireAuth({ role: ['editor', 'author'] })
- * requireAuth({ role: ['publisher'] })
+ * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ role } = {}) => {
-  if (!context.currentUser) {
+export const requireAuth = ({ roles } = {}) => {
+  if (!isAuthenticated) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (
-    typeof role !== 'undefined' &&
-    typeof role === 'string' &&
-    !context.currentUser.roles?.includes(role)
-  ) {
-    throw new ForbiddenError("You don't have access to do that.")
-  }
-
-  if (
-    typeof role !== 'undefined' &&
-    Array.isArray(role) &&
-    !context.currentUser.roles?.some((r) => role.includes(r))
-  ) {
+  if (!hasRole({ roles })) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }

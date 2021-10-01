@@ -1,5 +1,5 @@
+import { UserInputError } from '@redwoodjs/graphql-server'
 import { db } from 'src/lib/db'
-import { UserInputError } from '@redwoodjs/api'
 
 const validate = (input) => {
   if (input.email && !input.email.match(/[^@]+@[^.]+\..+/)) {
