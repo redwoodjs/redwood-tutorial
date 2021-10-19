@@ -1,8 +1,5 @@
-import {
-  AuthenticationError,
-  ForbiddenError,
-  parseJWT,
-} from '@redwoodjs/graphql-server'
+import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
+import { parseJWT } from '@redwoodjs/api'
 import { logger } from 'src/lib/logger'
 /**
  * getCurrentUser returns the user information together with
