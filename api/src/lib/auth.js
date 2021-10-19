@@ -1,12 +1,13 @@
-import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 import { parseJWT } from '@redwoodjs/api'
+import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 import { logger } from 'src/lib/logger'
+
 /**
  * getCurrentUser returns the user information together with
  * an optional collection of roles used by requireAuth() to check
  * if the user is authenticated or has role-based access
  *
- * @param decoded - The decoded access token containing user info and JWT claims like `sub`
+ * @param decoded - The decoded access token containing user info and JWT claims like `sub`. Note could be null.
  * @param { token, SupportedAuthTypes type } - The access token itself as well as the auth provider type
  * @param { APIGatewayEvent event, Context context } - An object which contains information from the invoker
  * such as headers and cookies, and the context information about the invocation such as IP Address
@@ -32,44 +33,69 @@ export const getCurrentUser = async (
   return { ...decoded }
 }
 
-//Taken from: https://redwoodjs.com/cookbook/role-based-access-control-rbac#how-to-code-examples
+/**
+ * The user is authenticated if there is a currentUser in the context
+ *
+ * @returns {boolean} - If the currentUser is authenticated
+ */
+export const isAuthenticated = () => {
+  return !!context.currentUser
+}
+
+/**
+ * When checking role membership, roles can be a single value, a list, or none.
+ * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
+ */
+
+/**
+ * Checks if the currentUser is authenticated (and assigned one of the given roles)
+ *
+ * @param roles: AllowedRoles - Checks if the currentUser is assigned one of these roles
+ *
+ * @returns {boolean} - Returns true if the currentUser is logged in and assigned one of the given roles,
+ * or when no roles are provided to check against. Otherwise returns false.
+ */
+export const hasRole = ({ roles }) => {
+  if (!isAuthenticated()) {
+    return false
+  }
+
+  if (roles) {
+    if (Array.isArray(roles)) {
+      return context.currentUser.roles?.some((r) => roles.includes(r))
+    }
+
+    if (typeof roles === 'string') {
+      return context.currentUser.roles?.includes(roles)
+    }
+
+    // roles not found
+    return false
+  }
+
+  return true
+}
+
 /**
  * Use requireAuth in your services to check that a user is logged in,
  * whether or not they are assigned a role, and optionally raise an
  * error if they're not.
  *
- * @param {string=} roles - An optional role or list of roles
- * @param {array=} roles - An optional list of roles
-
- * @example
+ * @param roles: AllowedRoles - When checking role membership, these roles grant access.
  *
- * // checks if currentUser is authenticated
- * requireAuth()
+ * @returns - If the currentUser is authenticated (and assigned one of the given roles)
  *
- * @example
+ * @throws {AuthenticationError} - If the currentUser is not authenticated
+ * @throws {ForbiddenError} If the currentUser is not allowed due to role permissions
  *
- * // checks if currentUser is authenticated and assigned one of the given roles
- * requireAuth({ roles: 'editor' })
- * requireAuth({ roles: ['admin', 'author', 'publisher'] })
+ * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles } = {}) => {
-  if (!context.currentUser) {
+export const requireAuth = ({ roles }) => {
+  if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (
-    typeof roles !== 'undefined' &&
-    typeof roles === 'string' &&
-    !context.currentUser.roles?.includes(roles)
-  ) {
-    throw new ForbiddenError("You don't have access to do that.")
-  }
-
-  if (
-    typeof roles !== 'undefined' &&
-    Array.isArray(roles) &&
-    !context.currentUser.roles?.some((role) => roles.includes(role))
-  ) {
+  if (!hasRole({ roles })) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
