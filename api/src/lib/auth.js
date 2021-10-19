@@ -32,66 +32,44 @@ export const getCurrentUser = async (
   return { ...decoded }
 }
 
-/**
- * The user is authenticated if there is a currentUser in the context
- *
- * @returns {boolean} - If the currentUser is authenticated
- */
-export const isAuthenticated = () => {
-  return !!context.currentUser
-}
-
-/**
- * Checks if the currentUser is authenticated (and assigned one of the given roles)
- *
- * @param {string= | string[]=} roles - A single role or list of roles to check if the user belongs to
- *
- * @returns {boolean} - Returns true if the currentUser is authenticated (and assigned one of the given roles)
- */
-export const hasRole = ({ roles }) => {
-  if (!isAuthenticated()) {
-    return false
-  }
-
-  if (
-    typeof roles !== 'undefined' &&
-    typeof roles === 'string' &&
-    context.currentUser.roles?.includes(roles)
-  ) {
-    return true
-  }
-
-  if (
-    typeof roles !== 'undefined' &&
-    Array.isArray(roles) &&
-    context.currentUser.roles?.some((r) => roles.includes(r))
-  ) {
-    return true
-  }
-
-  return false
-}
-
+//Taken from: https://redwoodjs.com/cookbook/role-based-access-control-rbac#how-to-code-examples
 /**
  * Use requireAuth in your services to check that a user is logged in,
  * whether or not they are assigned a role, and optionally raise an
  * error if they're not.
  *
- * @param {string= | string[]=} roles - A single role or list of roles to check if the user belongs to
+ * @param {string=} roles - An optional role or list of roles
+ * @param {array=} roles - An optional list of roles
+
+ * @example
  *
- * @returns - If the currentUser is authenticated (and assigned one of the given roles)
+ * // checks if currentUser is authenticated
+ * requireAuth()
  *
- * @throws {AuthenticationError} - If the currentUser is not authenticated
- * @throws {ForbiddenError} If the currentUser is not allowed due to role permissions
+ * @example
  *
- * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
+ * // checks if currentUser is authenticated and assigned one of the given roles
+ * requireAuth({ roles: 'editor' })
+ * requireAuth({ roles: ['admin', 'author', 'publisher'] })
  */
 export const requireAuth = ({ roles } = {}) => {
-  if (!isAuthenticated) {
+  if (!context.currentUser) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (!hasRole({ roles })) {
+  if (
+    typeof roles !== 'undefined' &&
+    typeof roles === 'string' &&
+    !context.currentUser.roles?.includes(roles)
+  ) {
+    throw new ForbiddenError("You don't have access to do that.")
+  }
+
+  if (
+    typeof roles !== 'undefined' &&
+    Array.isArray(roles) &&
+    !context.currentUser.roles?.some((role) => roles.includes(role))
+  ) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
