@@ -13,7 +13,7 @@
     "extends": "@redwoodjs/eslint-config"
   },
   "engines": {
-    "node": ">=14.x <=16.x",
+    "node": ">=14.17 <=16.x",
     "yarn": ">=1.15"
   },
   "prisma": {
