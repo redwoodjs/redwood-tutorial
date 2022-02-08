@@ -22,3 +22,13 @@ model Contact {
   message   String
   createdAt DateTime @default(now())
 }
+
+model User {
+  id                  Int @id @default(autoincrement())
+  name                String?
+  email               String @unique
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+}
