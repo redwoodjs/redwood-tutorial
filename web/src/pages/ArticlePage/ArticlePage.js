@@ -1,12 +1,12 @@
 import { MetaTags } from '@redwoodjs/web'
-import BlogPostCell from 'src/components/BlogPostCell'
+import ArticleCell from 'src/components/ArticleCell'
 
 const ArticlePage = ({ id }) => {
   return (
     <>
       <MetaTags title="Article" description="Article page" />
 
-      <BlogPostCell id={id} />
+      <ArticleCell id={id} />
     </>
   )
 }

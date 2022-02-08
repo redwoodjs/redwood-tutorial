@@ -34,13 +34,18 @@ const BlogLayout = ({ children }) => {
               </Link>
             </li>
             <li>
-              <a
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                href="#"
-                onClick={isAuthenticated ? logOut : logIn}
-              >
-                {isAuthenticated ? 'Log Out' : 'Log In'}
-              </a>
+              {isAuthenticated ? (
+                <div>
+                  <span>Logged in as {currentUser.email}</span>{' '}
+                  <button type="button" onClick={logOut} className="py-2 px-4">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link to={routes.login()} className="py-2 px-4">
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
           {isAuthenticated && (
