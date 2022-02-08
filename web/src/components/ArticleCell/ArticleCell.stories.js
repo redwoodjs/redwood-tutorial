@@ -1,5 +1,5 @@
-import { Loading, Empty, Failure, Success } from './BlogPostCell'
-import { standard } from './BlogPostCell.mock'
+import { Loading, Empty, Failure, Success } from './ArticleCell'
+import { standard } from './ArticleCell.mock'
 
 export const loading = () => {
   return Loading ? <Loading /> : null
@@ -17,4 +17,4 @@ export const success = () => {
   return Success ? <Success {...standard()} /> : null
 }
 
-export default { title: 'Cells/BlogPostCell' }
+export default { title: 'Cells/ArticleCell' }
