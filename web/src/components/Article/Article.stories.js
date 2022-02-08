@@ -1,8 +1,8 @@
-import BlogPost from './BlogPost'
+import Article from './Article'
 
 export const generated = () => {
   return (
-    <BlogPost
+    <Article
       post={{
         id: 1,
         title: 'First Post',
@@ -14,4 +14,4 @@ export const generated = () => {
   )
 }
 
-export default { title: 'Components/BlogPost' }
+export default { title: 'Components/Article' }
