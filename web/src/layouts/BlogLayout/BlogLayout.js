@@ -36,7 +36,6 @@ const BlogLayout = ({ children }) => {
             <li>
               {isAuthenticated ? (
                 <div>
-                  <span>Logged in as {currentUser.email}</span>{' '}
                   <button type="button" onClick={logOut} className="py-2 px-4">
                     Logout
                   </button>
