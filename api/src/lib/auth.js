@@ -1,36 +1,28 @@
-import { parseJWT } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
-import { logger } from 'src/lib/logger'
+import { db } from './db'
 
 /**
- * getCurrentUser returns the user information together with
- * an optional collection of roles used by requireAuth() to check
- * if the user is authenticated or has role-based access
+ * The session object sent in as the first argument to getCurrentUser() will
+ * have a single key `id` containing the unique ID of the logged in user
+ * (whatever field you set as `authFields.id` in your auth function config).
+ * You'll need to update the call to `db` below if you use a different model
+ * name or unique field name, for example:
  *
- * @param decoded - The decoded access token containing user info and JWT claims like `sub`. Note could be null.
- * @param { token, SupportedAuthTypes type } - The access token itself as well as the auth provider type
- * @param { APIGatewayEvent event, Context context } - An object which contains information from the invoker
- * such as headers and cookies, and the context information about the invocation such as IP Address
+ *   return await db.profile.findUnique({ where: { email: session.id } })
+ *                   ───┬───                       ──┬──
+ *      model accessor ─┘      unique id field name ─┘
  *
- * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
+ * !! BEWARE !! Anything returned from this function will be available to the
+ * client--it becomes the content of `currentUser` on the web side (as well as
+ * `context.currentUser` on the api side). You should carefully add additional
+ * fields to the `select` object below once you've decided they are safe to be
+ * seen if someone were to open the Web Inspector in their browser.
  */
-export const getCurrentUser = async (
-  decoded,
-  { _token, _type },
-  { _event, _context }
-) => {
-  if (!decoded) {
-    logger.warn('Missing decoded user')
-    return null
-  }
-
-  const { roles } = parseJWT({ decoded })
-
-  if (roles) {
-    return { ...decoded, roles }
-  }
-
-  return { ...decoded }
+export const getCurrentUser = async (session) => {
+  return await db.user.findUnique({
+    where: { id: session.id },
+    select: { id: true },
+  })
 }
 
 /**
@@ -60,13 +52,14 @@ export const hasRole = ({ roles }) => {
     return false
   }
 
+  // If your User model includes roles, uncomment the role checks on currentUser
   if (roles) {
     if (Array.isArray(roles)) {
-      return context.currentUser.roles?.some((r) => roles.includes(r))
+      // return context.currentUser.roles?.some((r) => roles.includes(r))
     }
 
     if (typeof roles === 'string') {
-      return context.currentUser.roles?.includes(roles)
+      // return context.currentUser.roles?.includes(roles)
     }
 
     // roles not found
