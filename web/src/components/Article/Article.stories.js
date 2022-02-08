@@ -3,7 +3,7 @@ import Article from './Article'
 export const generated = () => {
   return (
     <Article
-      post={{
+      article={{
         id: 1,
         title: 'First Post',
         body:

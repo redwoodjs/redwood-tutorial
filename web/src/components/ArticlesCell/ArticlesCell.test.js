@@ -22,12 +22,12 @@ describe('ArticlesCell', () => {
   })
 
   test('Success renders successfully', async () => {
-    const posts = standard().posts
-    render(<Success posts={posts} />)
+    const articles = standard().posts
+    render(<Success articles={articles} />)
 
-    expect(screen.getByText(posts[0].title)).toBeInTheDocument()
-    expect(screen.getByText(posts[0].body)).toBeInTheDocument()
-    expect(screen.getByText(posts[1].title)).toBeInTheDocument()
-    expect(screen.getByText(posts[1].body)).toBeInTheDocument()
+    expect(screen.getByText(articles[0].title)).toBeInTheDocument()
+    expect(screen.getByText(articles[0].body)).toBeInTheDocument()
+    expect(screen.getByText(articles[1].title)).toBeInTheDocument()
+    expect(screen.getByText(articles[1].body)).toBeInTheDocument()
   })
 })
