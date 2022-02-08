@@ -13,7 +13,7 @@
     ]
   },
   "dependencies": {
-    "@redwoodjs/auth": "^0.44.1",
+    "@redwoodjs/auth": "0.44.1",
     "@redwoodjs/forms": "^0.44.1",
     "@redwoodjs/router": "^0.44.1",
     "@redwoodjs/web": "^0.44.1",

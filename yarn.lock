@@ -2508,7 +2508,7 @@
     pino "7.6.5"
     uuid "8.3.2"
 
-"@redwoodjs/auth@^0.44.1", "@redwoodjs/auth@v0.44.1":
+"@redwoodjs/auth@0.44.1", "@redwoodjs/auth@v0.44.1":
   version "0.44.1"
   resolved "https://registry.yarnpkg.com/@redwoodjs/auth/-/auth-0.44.1.tgz#7a391479e98e5e99830c687a02eae3cb3bdc392d"
   integrity sha512-M5dknhsCCbBwx8L5Dj5807ifbS2LndTkDb+/sapYoAQ2t2CQ9e7GS0hLs6aSoSQVTl6r2SQdMFQGZffT2Gt8EA==
