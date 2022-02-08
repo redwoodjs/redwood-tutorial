@@ -1,8 +1,8 @@
 import { render, screen } from '@redwoodjs/testing'
-import { Loading, Empty, Failure, Success } from './BlogPostsCell'
-import { standard } from './BlogPostsCell.mock'
+import { Loading, Empty, Failure, Success } from './ArticlesCell'
+import { standard } from './ArticlesCell.mock'
 
-describe('BlogPostsCell', () => {
+describe('ArticlesCell', () => {
   test('Loading renders successfully', () => {
     expect(() => {
       render(<Loading />)

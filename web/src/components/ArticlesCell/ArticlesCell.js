@@ -3,7 +3,7 @@ import BlogPost from 'src/components/BlogPost'
 
 export const QUERY = gql`
   query BlogPostsQuery {
-    posts {
+    articles: posts {
       id
       title
       body
@@ -21,8 +21,8 @@ export const Failure = ({ error }) => <div>Error: {error.message}</div>
 export const Success = ({ posts }) => {
   return (
     <div className="space-y-10">
-      {posts.map((post) => (
-        <BlogPost post={post} key={post.id} />
+      {articles.map((article) => (
+        <Article articles={articles} key={article.id} />
       ))}
     </div>
   )
