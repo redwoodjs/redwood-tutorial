@@ -22,7 +22,7 @@ describe('ArticlesCell', () => {
   })
 
   test('Success renders successfully', async () => {
-    const articles = standard().posts
+    const articles = standard().articles
     render(<Success articles={articles} />)
 
     expect(screen.getByText(articles[0].title)).toBeInTheDocument()
