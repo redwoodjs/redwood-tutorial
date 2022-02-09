@@ -14,7 +14,7 @@ export const failure = () => {
 }
 
 export const success = () => {
-  return Success ? <Success article={standard().post} /> : null
+  return Success ? <Success article={standard().article} /> : null
 }
 
 export default { title: 'Cells/ArticleCell' }

@@ -1,7 +1,7 @@
 // Define your own mock data here:
 export const standard = () => {
   return {
-    posts: [
+    articles: [
       {
         id: 1,
         title: 'First Post',
@@ -15,5 +15,5 @@ export const standard = () => {
         createdAt: '2020-01-01T12:34:56Z',
       },
     ],
-  };
+  }
 };
