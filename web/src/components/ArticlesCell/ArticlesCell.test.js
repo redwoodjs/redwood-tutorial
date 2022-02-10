@@ -22,7 +22,8 @@ describe('ArticlesCell', () => {
   })
 
   test('Success renders successfully', async () => {
-    render(<Success articles={standard().articles} />)
+    const articles = standard().articles
+    render(<Success articles={articles} />)
 
     articles.forEach((article) => {
       const truncatedBody = article.body.substring(0, 10)
