@@ -1,7 +1,7 @@
 import Article from 'src/components/Article'
 
 export const QUERY = gql`
-  query BlogPostsQuery {
+  query ArticlesQuery {
     articles: posts {
       id
       title
