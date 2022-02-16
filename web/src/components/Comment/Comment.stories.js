@@ -7,6 +7,7 @@ export const defaultView = () => {
         name: 'Rob Cameron',
         body: 'This is the first comment!',
         createdAt: '2020-01-01T12:34:56Z',
+        postId: 1,
       }}
     />
   )
@@ -23,6 +24,7 @@ export const moderatorView = () => {
         name: 'Rob Cameron',
         body: 'This is the first comment!',
         createdAt: '2020-01-01T12:34:56Z',
+        postId: 1,
       }}
     />
   )
