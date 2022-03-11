@@ -143,6 +143,14 @@ export const handler = async (event, context) => {
     login: loginOptions,
     resetPassword: resetPasswordOptions,
     signup: signupOptions,
+
+    cookie: {
+      HttpOnly: true,
+      Path: '/',
+      SameSite: 'Strict',
+      Secure: true,
+      // Domain: 'example.com',
+    },
   })
 
   return await authHandler.invoke()
