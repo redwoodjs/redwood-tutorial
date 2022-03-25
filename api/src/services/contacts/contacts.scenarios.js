@@ -5,7 +5,7 @@ export const standard = defineScenario({
         name: 'John Doe',
         email: 'john.doe@example.com',
         message: 'I love RedwoodJS',
-      }
+      },
     },
   },
 })
