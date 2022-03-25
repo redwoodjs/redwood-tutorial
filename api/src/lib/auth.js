@@ -35,11 +35,6 @@ export const isAuthenticated = () => {
 }
 
 /**
- * When checking role membership, roles can be a single value, a list, or none.
- * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
- */
-
-/**
  * Checks if the currentUser is authenticated (and assigned one of the given roles)
  *
  * @param roles: AllowedRoles - Checks if the currentUser is assigned one of these roles
@@ -47,26 +42,39 @@ export const isAuthenticated = () => {
  * @returns {boolean} - Returns true if the currentUser is logged in and assigned one of the given roles,
  * or when no roles are provided to check against. Otherwise returns false.
  */
-export const hasRole = ({ roles }) => {
+export const hasRole = (roles) => {
   if (!isAuthenticated()) {
     return false
   }
 
-  // If your User model includes roles, uncomment the role checks on currentUser
-  if (roles) {
-    if (Array.isArray(roles)) {
-      // return context.currentUser.roles?.some((r) => roles.includes(r))
-    }
+  const currentUserRoles = context.currentUser?.roles
 
-    if (typeof roles === 'string') {
-      // return context.currentUser.roles?.includes(roles)
+  if (typeof roles === 'string') {
+    if (typeof currentUserRoles === 'string') {
+      // roles to check is a string, currentUser.roles is a string
+      return currentUserRoles === roles
+    } else if (Array.isArray(currentUserRoles)) {
+      // roles to check is a string, currentUser.roles is an array
+      return currentUserRoles?.some((allowedRole) => roles === allowedRole)
     }
-
-    // roles not found
-    return false
   }
 
-  return true
+  if (Array.isArray(roles)) {
+    if (Array.isArray(currentUserRoles)) {
+      // roles to check is an array, currentUser.roles is an array
+      return currentUserRoles?.some((allowedRole) =>
+        roles.includes(allowedRole)
+      )
+    } else if (typeof context.currentUser.roles === 'string') {
+      // roles to check is an array, currentUser.roles is a string
+      return roles.some(
+        (allowedRole) => context.currentUser?.roles === allowedRole
+      )
+    }
+  }
+
+  // roles not found
+  return false
 }
 
 /**
@@ -88,7 +96,7 @@ export const requireAuth = ({ roles }) => {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (!hasRole({ roles })) {
+  if (roles && !hasRole(roles)) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
