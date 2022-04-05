@@ -68,7 +68,7 @@ const ContactPage = () => {
         <FieldError name="name" className="block text-red-700" />
 
         <Label
-          name="name"
+          name="email"
           className="block mt-8 text-gray-700 uppercase text-sm"
           errorClassName="block mt-8 text-red-700 uppercase text-sm"
         >
@@ -89,7 +89,7 @@ const ContactPage = () => {
         <FieldError name="email" className="block text-red-700" />
 
         <Label
-          name="name"
+          name="message"
           className="block mt-8 text-gray-700 uppercase text-sm"
           errorClassName="block mt-8 text-red-700 uppercase text-sm"
         >
