@@ -15,6 +15,8 @@ export const failure = () => {
 
 export const success = () => {
   return Success ? <Success articles={standard().articles} /> : null
+  // NOTE: Or you can use "spreading out" the results of standard()
+  // -> ...standard()
 }
 
 export default { title: 'Cells/ArticlesCell' }
