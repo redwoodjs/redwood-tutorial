@@ -64,5 +64,3 @@ const BlogLayout = ({ children }) => {
 }
 
 export default BlogLayout
-
-// Until here: https://redwoodjs.com/docs/tutorial/chapter6/comment-form#introducing-the-redwood-console

@@ -26,6 +26,6 @@ export const schema = gql`
 
   type Mutation {
     createComment(input: CreateCommentInput!): Comment! @skipAuth
-    deleteComment(id: Int!): Comment! @requireAuth # NOTE: It's also possible to return NULL
+    deleteComment(id: Int!): Comment! @requireAuth(roles: "moderator") # NOTE: It's also possible to return NULL. Also if user isn't logged in as moderator, then error will be thrown
   }
 `
