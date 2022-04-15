@@ -9,7 +9,7 @@ export const schema = gql`
   }
 
   type Query {
-    comments: [Comment!]! @skipAuth # NOTE: So that anonymous users have access to view all comments
+    comments(postId: Int!): [Comment!]! @skipAuth # NOTE: So that anonymous users have access to view all comments
   }
 
   input CreateCommentInput {
