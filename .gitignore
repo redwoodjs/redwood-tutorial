@@ -1,3 +1,4 @@
+.idea
 .DS_Store
 .env
 .netlify
@@ -7,8 +8,13 @@ dist
 dist-babel
 node_modules
 yarn-error.log
-redwood/*
 web/public/mockServiceWorker.js
 web/types/graphql.d.ts
 api/types/graphql.d.ts
-web/public/mockServiceWorker.js
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
