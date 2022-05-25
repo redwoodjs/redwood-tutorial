@@ -16,7 +16,7 @@
       ]
     },
     {
-      "packageNames": ["@redwoodjs/core", "@redwoodjs/forms", "@redwoodjs/router", "@redwoodjs/web", "@redwoodjs/api", "@redwoodjs/graphql-server"],
+      "packageNames": ["@redwoodjs/core", "@redwoodjs/forms", "@redwoodjs/router", "@redwoodjs/web", "@redwoodjs/api", "@redwoodjs/graphql-server", "@redwoodjs/auth"],
       "automerge": true,
       "matchUpdateTypes": [
         "minor",
@@ -27,6 +27,8 @@
   ],
   "ignoreDeps": [
     "yarn",
-    "node"
+    "node",
+    "react",
+    "react-dom"
   ]
 }
