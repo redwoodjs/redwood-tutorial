@@ -3,10 +3,11 @@ export const schema = gql`
     id: Int!
     name: String
     email: String!
-    hashedPassword: String!
-    salt: String!
-    resetToken: String
-    resetTokenExpiresAt: DateTime
+    # we never want to make these publicly available via GraphQL for security!
+    # hashedPassword: String!
+    # salt: String!
+    # resetToken: String
+    # resetTokenExpiresAt: DateTime
   }
 
   type Query {
@@ -17,19 +18,19 @@ export const schema = gql`
   input CreateUserInput {
     name: String
     email: String!
-    hashedPassword: String!
-    salt: String!
-    resetToken: String
-    resetTokenExpiresAt: DateTime
+    # hashedPassword: String!
+    # salt: String!
+    # resetToken: String
+    # resetTokenExpiresAt: DateTime
   }
 
   input UpdateUserInput {
     name: String
     email: String
-    hashedPassword: String
-    salt: String
-    resetToken: String
-    resetTokenExpiresAt: DateTime
+    # hashedPassword: String
+    # salt: String
+    # resetToken: String
+    # resetTokenExpiresAt: DateTime
   }
 
   type Mutation {
