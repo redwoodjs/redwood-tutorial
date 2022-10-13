@@ -4,7 +4,7 @@ import BlogLayout from './BlogLayout'
 
 const EMAIL = 'rob@redwoodjs.com'
 const loggedIn = () => {
-  mockCurrentUser({ email: EMAIL })
+  mockCurrentUser({ id: 1, email: EMAIL })
 }
 const loggedOut = () => {
   mockCurrentUser(null)
