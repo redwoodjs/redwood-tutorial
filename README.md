@@ -15,7 +15,6 @@ cd redwood-tutorial
 yarn install
 yarn rw ts-to-js # if you wish to continue using JavaScript
 yarn rw prisma migrate dev
-yarn rw prisma db seed
 yarn rw g secret
 yarn rw dev
 ```
