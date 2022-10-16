@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "semanticCommits": "disabled",
+  "rebaseWhen": "conflicted",
+  "rangeStrategy": "pin",
+  "prHourlyLimit": 0,
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
+    },
+    {
+      "packageNames": ["@redwoodjs/core", "@redwoodjs/forms", "@redwoodjs/router", "@redwoodjs/web", "@redwoodjs/api", "@redwoodjs/graphql-server", "@redwoodjs/auth"],
+      "automerge": true,
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "major"
+      ]
+    }
+  ],
+  "ignoreDeps": [
+    "yarn",
+    "node",
+    "react",
+    "react-dom"
+  ]
+}
