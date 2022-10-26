@@ -35,7 +35,7 @@ export default async () => {
   for (const post of POSTS) {
     await db.post.upsert({
       where: { id: post.id },
-      create: { id: post.id, title: post.title, body: post.body },
+      create: { ...post },
       update: {},
     })
 
