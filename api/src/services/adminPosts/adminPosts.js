@@ -1,11 +1,21 @@
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
+
+const validateOwnership = async ({ id }) => {
+  if (await adminPost({ id })) {
+    return true
+  } else {
+    throw new ForbiddenError("You don't have access to this post")
+  }
+}
 
 export const adminPosts = () => {
   return db.post.findMany({ where: { userId: context.currentUser.id } })
 }
 
 export const adminPost = ({ id }) => {
-  return db.post.findUnique({
+  return db.post.findFirst({
     where: { id, userId: context.currentUser.id },
   })
 }
@@ -16,15 +26,19 @@ export const createPost = ({ input }) => {
   })
 }
 
-export const updatePost = ({ id, input }) => {
+export const updatePost = async ({ id, input }) => {
+  await validateOwnership({ id })
+
   return db.post.update({
     data: input,
-    where: { id, userId: context.currentUser.id },
+    where: { id },
   })
 }
 
-export const deletePost = ({ id }) => {
+export const deletePost = async ({ id }) => {
+  await validateOwnership({ id })
+
   return db.post.delete({
-    where: { id, userId: context.currentUser.id },
+    where: { id },
   })
 }
