@@ -24,6 +24,7 @@ export default async () => {
     where: { id: 1 },
     create: {
       id: 1,
+      name: 'John Doe',
       email: 'admin@admin.com',
       hashedPassword:
         'ad9563042fe9f154419361eeeb775d8a12f3975a3722953fd8e326dd108d5645',
