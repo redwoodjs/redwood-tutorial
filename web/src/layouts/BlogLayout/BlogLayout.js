@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
 
 const BlogLayout = ({ children }) => {
-  const { logIn, logOut, isAuthenticated, currentUser } = useAuth()
+  const { logOut, isAuthenticated, currentUser } = useAuth()
 
   return (
     <>
