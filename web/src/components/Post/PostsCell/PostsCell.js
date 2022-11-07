@@ -3,7 +3,7 @@ import { Link, routes } from '@redwoodjs/router'
 import Posts from 'src/components/Post/Posts'
 
 export const QUERY = gql`
-  query POSTS {
+  query FindPosts {
     posts {
       id
       title
@@ -25,6 +25,10 @@ export const Empty = () => {
     </div>
   )
 }
+
+export const Failure = ({ error }) => (
+  <div className="rw-cell-error">{error?.message}</div>
+)
 
 export const Success = ({ posts }) => {
   return <Posts posts={posts} />

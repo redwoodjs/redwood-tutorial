@@ -52,6 +52,7 @@ export default RedwoodDevFatalErrorPage ||
             `,
         }}
       />
+
       <section>
         <h1>
           <span>Something went wrong</span>

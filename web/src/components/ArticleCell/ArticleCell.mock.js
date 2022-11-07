@@ -8,4 +8,4 @@ export const standard = () => {
       createdAt: '2020-01-01T12:34:56Z',
     },
   }
-};
+}

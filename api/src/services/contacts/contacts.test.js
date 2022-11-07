@@ -1,13 +1,7 @@
-import {
-  contacts,
-  contact,
-  createContact,
-  updateContact,
-  deleteContact,
-} from './contacts'
+import { contacts, contact, createContact } from './contacts'
 
 // Generated boilerplate tests do not account for all circumstances
-// and can fail without adjustments, e.g. Float and DateTime types.
+// and can fail without adjustments, e.g. Float.
 //           Please refer to the RedwoodJS Testing Docs:
 //       https://redwoodjs.com/docs/testing#testing-services
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
@@ -37,22 +31,5 @@ describe('contacts', () => {
     expect(result.name).toEqual('Jane Doe')
     expect(result.email).toEqual('jane@anonymous.com')
     expect(result.message).toEqual('RedwoodJS is the best')
-  })
-
-  scenario('updates a contact', async (scenario) => {
-    const original = await contact({ id: scenario.contact.john.id })
-    const result = await updateContact({
-      id: original.id,
-      input: { name: 'Johnathan Doe' },
-    })
-
-    expect(result.name).toEqual('Johnathan Doe')
-  })
-
-  scenario('deletes a contact', async (scenario) => {
-    const original = await deleteContact({ id: scenario.contact.john.id })
-    const result = await contact({ id: original.id })
-
-    expect(result).toEqual(null)
   })
 })

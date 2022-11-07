@@ -2,9 +2,11 @@ import { render, screen, waitFor } from '@redwoodjs/testing'
 
 import BlogLayout from './BlogLayout'
 
-const EMAIL = 'rob@redwoodjs.com'
+const ID = 4,
+  EMAIL = 'rob@redwoodjs.com'
+
 const loggedIn = () => {
-  mockCurrentUser({ email: EMAIL })
+  mockCurrentUser({ id: ID, email: EMAIL })
 }
 const loggedOut = () => {
   mockCurrentUser(null)
