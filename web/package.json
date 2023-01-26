@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@redwoodjs/auth": "4.0.0-rc.618",
+    "@redwoodjs/auth-dbauth-web": "4.0.0-rc.618+caf6f339d",
     "@redwoodjs/forms": "4.0.0-rc.618",
     "@redwoodjs/router": "4.0.0-rc.618",
     "@redwoodjs/web": "4.0.0-rc.618",

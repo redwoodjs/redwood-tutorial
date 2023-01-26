@@ -1,4 +1,5 @@
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from './db'
 
 /**
@@ -19,6 +20,10 @@ import { db } from './db'
  * seen if someone were to open the Web Inspector in their browser.
  */
 export const getCurrentUser = async (session) => {
+  if (!session || typeof session.id !== 'number') {
+    throw new Error('Invalid session')
+  }
+
   return await db.user.findUnique({
     where: { id: session.id },
     select: { id: true, email: true },
@@ -35,9 +40,14 @@ export const isAuthenticated = () => {
 }
 
 /**
+ * When checking role membership, roles can be a single value, a list, or none.
+ * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
+ */
+
+/**
  * Checks if the currentUser is authenticated (and assigned one of the given roles)
  *
- * @param roles: AllowedRoles - Checks if the currentUser is assigned one of these roles
+ * @param roles: {@link AllowedRoles} - Checks if the currentUser is assigned one of these roles
  *
  * @returns {boolean} - Returns true if the currentUser is logged in and assigned one of the given roles,
  * or when no roles are provided to check against. Otherwise returns false.
@@ -65,11 +75,9 @@ export const hasRole = (roles) => {
       return currentUserRoles?.some((allowedRole) =>
         roles.includes(allowedRole)
       )
-    } else if (typeof context.currentUser.roles === 'string') {
+    } else if (typeof currentUserRoles === 'string') {
       // roles to check is an array, currentUser.roles is a string
-      return roles.some(
-        (allowedRole) => context.currentUser?.roles === allowedRole
-      )
+      return roles.some((allowedRole) => currentUserRoles === allowedRole)
     }
   }
 
@@ -82,16 +90,16 @@ export const hasRole = (roles) => {
  * whether or not they are assigned a role, and optionally raise an
  * error if they're not.
  *
- * @param roles: AllowedRoles - When checking role membership, these roles grant access.
+ * @param roles: {@link AllowedRoles} - When checking role membership, these roles grant access.
  *
  * @returns - If the currentUser is authenticated (and assigned one of the given roles)
  *
- * @throws {AuthenticationError} - If the currentUser is not authenticated
- * @throws {ForbiddenError} If the currentUser is not allowed due to role permissions
+ * @throws {@link AuthenticationError} - If the currentUser is not authenticated
+ * @throws {@link ForbiddenError} If the currentUser is not allowed due to role permissions
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles }) => {
+export const requireAuth = ({ roles } = {}) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
