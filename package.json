@@ -7,7 +7,7 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/core": "3.2.0"
+    "@redwoodjs/core": "4.0.0-rc.618"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config"
