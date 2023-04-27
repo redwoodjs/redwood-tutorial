@@ -13,14 +13,14 @@
     ]
   },
   "dependencies": {
-    "@redwoodjs/auth": "4.3.1",
-    "@redwoodjs/auth-dbauth-web": "4.3.1",
-    "@redwoodjs/forms": "4.3.1",
-    "@redwoodjs/router": "4.3.1",
-    "@redwoodjs/web": "4.3.1",
+    "@redwoodjs/auth": "5.0.0",
+    "@redwoodjs/auth-dbauth-web": "5.0.0",
+    "@redwoodjs/forms": "5.0.0",
+    "@redwoodjs/router": "5.0.0",
+    "@redwoodjs/web": "5.0.0",
     "prop-types": "15.8.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "0.4.0",
