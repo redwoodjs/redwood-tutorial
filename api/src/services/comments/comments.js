@@ -1,31 +1,36 @@
-import { requireAuth } from 'src/lib/auth'
-import { db } from 'src/lib/db'
+import { authDb } from 'src/lib/db'
 
 export const comments = ({ postId }) => {
-  return db.comment.findMany({ where: { postId } })
+  return authDb().comment.findMany({ where: { postId } })
 }
 
 export const comment = ({ id }) => {
-  return db.comment.findUnique({
+  return authDb().comment.findUnique({
     where: { id },
   })
 }
 
 export const createComment = ({ input }) => {
-  return db.comment.create({
+  return authDb().comment.create({
     data: input,
   })
 }
 
 export const deleteComment = ({ id }) => {
-  requireAuth({ roles: 'moderator' })
-  return db.comment.delete({
+  // instead of checking roles explicitly, we now rely on the
+  // access policies to authorize the operation
+  //
+  //     requireAuth({ roles: 'moderator' })
+  //
+  return authDb().comment.delete({
     where: { id },
   })
 }
 
 export const Comment = {
   post: (_obj, { root }) => {
-    return db.comment.findUnique({ where: { id: root?.id } }).post()
+    return authDb()
+      .comment.findUnique({ where: { id: root?.id } })
+      .post()
   },
 }

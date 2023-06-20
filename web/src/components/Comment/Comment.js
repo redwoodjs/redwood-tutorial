@@ -43,15 +43,15 @@ const Comment = ({ comment }) => {
         </time>
       </header>
       <p className="text-sm mt-2">{comment.body}</p>
-      {hasRole('moderator') && (
-        <button
-          type="button"
-          onClick={moderate}
-          className="absolute bottom-2 right-2 bg-red-500 text-xs rounded text-white px-2 py-1"
-        >
-          Delete
-        </button>
-      )}
+      {/* {hasRole('moderator') && ( */}
+      <button
+        type="button"
+        onClick={moderate}
+        className="absolute bottom-2 right-2 bg-red-500 text-xs rounded text-white px-2 py-1"
+      >
+        Delete
+      </button>
+      {/* )} */}
     </div>
   )
 }
