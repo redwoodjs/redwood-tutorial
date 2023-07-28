@@ -6,12 +6,16 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
+  title = "Redwood Tutorial Blog"
   port = 8910
   apiUrl = "/.netlify/functions"
-  title = "Redwood Tutorial Blog"
+  includeEnvironmentVariables = [
+    # Add any ENV vars that should be available to the web side to this array
+    # See https://redwoodjs.com/docs/environment-variables#web
+  ]
 [api]
   port = 8911
 [browser]
   open = true
-[experimental]
-  esbuild = false
+[notifications]
+  versionUpdates = ["latest"]
