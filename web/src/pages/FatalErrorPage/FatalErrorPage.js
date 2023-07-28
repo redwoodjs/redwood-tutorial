@@ -7,14 +7,10 @@
 // still render a generic error page, but your users will prefer something a bit more
 // thoughtful. =)
 
-// Ensures that production builds do not include the error page
-let RedwoodDevFatalErrorPage = undefined
-if (process.env.NODE_ENV === 'development') {
-  RedwoodDevFatalErrorPage =
-    require('@redwoodjs/web/dist/components/DevFatalErrorPage').DevFatalErrorPage
-}
+// This import will be automatically removed when building for production
+import { DevFatalErrorPage } from '@redwoodjs/web/dist/components/DevFatalErrorPage'
 
-export default RedwoodDevFatalErrorPage ||
+export default DevFatalErrorPage ||
   (() => (
     <main>
       <style
