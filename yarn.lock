@@ -5186,16 +5186,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/typography@npm:0.5.2":
-  version: 0.5.2
-  resolution: "@tailwindcss/typography@npm:0.5.2"
+"@tailwindcss/typography@npm:0.5.10":
+  version: 0.5.10
+  resolution: "@tailwindcss/typography@npm:0.5.10"
   dependencies:
     lodash.castarray: ^4.4.0
     lodash.isplainobject: ^4.0.6
     lodash.merge: ^4.6.2
+    postcss-selector-parser: 6.0.10
   peerDependencies:
     tailwindcss: "*"
-  checksum: 23261658dcf5a9b4959132748584b3c1016501dcf69e4971d4b2e950681de8a4b35021fab35bd2e11f642fab9572d001cc3675bd9e998401490beec7dafb37c8
+  checksum: 0fa9c96bf091fb79fdc39a0244027b3891e9205f714197c8196e7ba2305523ce8695d14b912366de9b77d4b1d3a742fb7f9bc9bb633fddc7c7f13374b41075d2
   languageName: node
   linkType: hard
 
@@ -17283,6 +17284,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-selector-parser@npm:6.0.10":
+  version: 6.0.10
+  resolution: "postcss-selector-parser@npm:6.0.10"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: a0b27c5e3f7604c8dc7cd83f145fdd7b21448e0d86072da99e0d78e536ba27aa9db2d42024c50aa530408ee517c4bdc0260529e1afb56608f9a82e839c207e82
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:^6.0.10, postcss-selector-parser@npm:^6.0.11, postcss-selector-parser@npm:^6.0.2, postcss-selector-parser@npm:^6.0.4, postcss-selector-parser@npm:^6.0.5, postcss-selector-parser@npm:^6.0.6":
   version: 6.0.13
   resolution: "postcss-selector-parser@npm:6.0.13"
@@ -21041,7 +21052,7 @@ __metadata:
     "@tailwindcss/aspect-ratio": 0.4.0
     "@tailwindcss/forms": 0.5.2
     "@tailwindcss/line-clamp": 0.4.0
-    "@tailwindcss/typography": 0.5.2
+    "@tailwindcss/typography": 0.5.10
     autoprefixer: 10.4.7
     postcss: 8.4.14
     postcss-loader: 7.0.0
