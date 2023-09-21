@@ -4680,14 +4680,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/forms@npm:0.5.2":
-  version: 0.5.2
-  resolution: "@tailwindcss/forms@npm:0.5.2"
+"@tailwindcss/forms@npm:0.5.6":
+  version: 0.5.6
+  resolution: "@tailwindcss/forms@npm:0.5.6"
   dependencies:
     mini-svg-data-uri: ^1.2.3
   peerDependencies:
     tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
-  checksum: 2eab4f0b43141e2b2513ae85469421453f721783ed11a6fb27ee62a267aec2a90e3dac10998bc608cc6f7a35ddcd671f72c71264c9001f52e0b3ef298c9a68c5
+  checksum: 077f7be640a3d97c0a543bc60c06823c07fdb43928c027d65638ffe74e33037ce5d503609048e14049e4ed578dad508058a8aef0aaf38453c45bfd9c0623dacb
   languageName: node
   linkType: hard
 
@@ -20248,7 +20248,7 @@ __metadata:
     "@redwoodjs/vite": 6.3.1
     "@redwoodjs/web": 6.3.1
     "@tailwindcss/aspect-ratio": 0.4.2
-    "@tailwindcss/forms": 0.5.2
+    "@tailwindcss/forms": 0.5.6
     "@tailwindcss/line-clamp": 0.4.4
     "@tailwindcss/typography": 0.5.10
     autoprefixer: 10.4.16
