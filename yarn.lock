@@ -4671,12 +4671,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/aspect-ratio@npm:0.4.0":
-  version: 0.4.0
-  resolution: "@tailwindcss/aspect-ratio@npm:0.4.0"
+"@tailwindcss/aspect-ratio@npm:0.4.2":
+  version: 0.4.2
+  resolution: "@tailwindcss/aspect-ratio@npm:0.4.2"
   peerDependencies:
     tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
-  checksum: b179fb540c50ea017a2e722a56ae852f90acb1063ba83ed3e6735819d297e5f2bd9483726b7ed0063bbeea094f708a37094ff1c3514c8113645be51067ed89d8
+  checksum: c821a8061f80200b20db26f9cf2a711ffb17814adf847a72d4d4632804d1cabf6671df8e99e06cedfb2ba97b968d7843cd435d1201519c86acdde702efca418b
   languageName: node
   linkType: hard
 
@@ -20247,7 +20247,7 @@ __metadata:
     "@redwoodjs/router": 6.3.1
     "@redwoodjs/vite": 6.3.1
     "@redwoodjs/web": 6.3.1
-    "@tailwindcss/aspect-ratio": 0.4.0
+    "@tailwindcss/aspect-ratio": 0.4.2
     "@tailwindcss/forms": 0.5.2
     "@tailwindcss/line-clamp": 0.4.0
     "@tailwindcss/typography": 0.5.10
