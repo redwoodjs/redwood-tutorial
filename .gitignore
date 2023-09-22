@@ -2,7 +2,8 @@
 .DS_Store
 .env
 .netlify
-.redwood
+.redwood/*
+!.redwood/README.md
 dev.db*
 dist
 dist-babel
@@ -11,13 +12,7 @@ yarn-error.log
 web/public/mockServiceWorker.js
 web/types/graphql.d.ts
 api/types/graphql.d.ts
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+api/src/lib/generateGraphiQLHeader.*
 .pnp.*
 .yarn/*
 !.yarn/patches
