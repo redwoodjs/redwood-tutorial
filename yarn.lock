@@ -20328,7 +20328,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
-    "@redwoodjs/auth": 6.3.1
     "@redwoodjs/auth-dbauth-web": 6.3.1
     "@redwoodjs/forms": 6.3.1
     "@redwoodjs/router": 6.3.1
