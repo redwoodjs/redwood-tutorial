@@ -50,7 +50,7 @@ const BlogLayout = ({ children }) => {
           </ul>
           {isAuthenticated && (
             <div className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300">
-              {currentUser.email}
+              {currentUser?.email}
             </div>
           )}
         </nav>
