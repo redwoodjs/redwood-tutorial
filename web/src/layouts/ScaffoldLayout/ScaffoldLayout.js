@@ -1,7 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
-const PostsLayout = (props) => {
+const ScaffoldLayout = (props) => {
   return (
     <div className="rw-scaffold">
       <Toaster />
@@ -20,4 +20,4 @@ const PostsLayout = (props) => {
   )
 }
 
-export default PostsLayout
+export default ScaffoldLayout
